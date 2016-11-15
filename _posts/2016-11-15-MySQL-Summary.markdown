@@ -122,7 +122,7 @@ c. 修改下my-defaule.ini配置文件,重命名为my.ini.在其中修改或添�
 d. 以管理员身份运行cmd,进入到MySQl的bin文件下,执行mysqld -install [service name]不写服务名的话,默认就是MySQL. (多个版本的话要保证不同版本使用的service name不同)
                                                             -remove 删除
       安装成功后,继续输入net start [service name] 启动服务
-   e: 服务启动成功后,就可以登录了.
+e: 服务启动成功后,就可以登录了.
       输入mysql -u root -p(第一次登录没有密码,直接按回车过),登录成功！
 
 
