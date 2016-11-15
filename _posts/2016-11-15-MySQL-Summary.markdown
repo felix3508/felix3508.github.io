@@ -1,0 +1,133 @@
+---
+layout: post
+title:  "MySQL Summary"
+Content: “this is a test.”
+date:   2016-11-15 12:42:30
+categories: jekyll update
+---
+**安装**：
+
+1. 拷贝mysql-5.6.10-win32.msi到指定目录下
+2. 双击默认安装。
+3. 安装后，会遇到打不开 
+   MySQL Command Line
+   的现象
+
+解决方法如下：
+
+1. 到MySql安装目录下把my-default.ini改名成my.ini
+1. 用管理员身份 打开cmd
+1. cd到MySql安装目录的bin文件夹下
+1. 执行 mysqld --install
+1. 出现成功字样后右键计算机->管理
+1. 在对话框中 服务和应用程序->服务 找到MySQL
+1. 右键->启动，看一下“启动类型”如果不是自动启动的话右键->属性 把启动类型改为 自动
+1. 然后就可以使用自己以前的方式愉快的玩耍mysql了（以前设置path的同学不要忘记设置path）
+
+**关于如何修改root账号的密码**：
+
+请参考：[http://blog.csdn.net/mmm333zzz/article/details/20364213](http://blog.csdn.net/mmm333zzz/article/details/20364213)
+
+刚安装完成时root账号默认密码为空，此时可以将密码修改为指定的密码. 如：123456
+
+    c:>mysql –u root
+    
+    mysql>show databases; 
+    
+    mysql>use mysql;
+    
+    mysql>UPDATE user SET password=PASSWORD("liferay") WHERE user='root';
+    
+    mysql>FLUSH PRIVILEGES;
+    
+    mysql>QUIT
+    
+
+**修改MySQL的字符集**
+
+参考: 
+[http://zhidao.baidu.com/link?url=TuU1IQOcZ5S3kh45aUmKaxAEXz-23W3cAe9SU3rZMzNReHAFrjNKFVJRBOIqwLQ_DMvWAD1yzqm8PBRafNnh2J95J93E88DS8IgL_gjibNC](http://zhidao.baidu.com/link?url=TuU1IQOcZ5S3kh45aUmKaxAEXz-23W3cAe9SU3rZMzNReHAFrjNKFVJRBOIqwLQ_DMvWAD1yzqm8PBRafNnh2J95J93E88DS8IgL_gjibNC)
+
+1. 进入mysql命令行，使用 mysql> SHOW VARIABLES LIKE 'character%';查看数据库编码
+2. 使用mysql命令修改对应的字符集编码如：
+   
+        mysqlset character_set_client=utf8;
+    
+        mysqlset character_set_connection=utf8;
+    
+        mysqlset character_set_database=utf8;
+    
+        mysqlset character_set_results=utf8;
+    
+        mysqlset character_set_server=utf8;
+
+
+**关于如何设置远程连接**：
+
+请参考：http://blog.chinaunix.net/uid-23215128-id-2951624.html
+
+改表法：
+
+    mysqluse mysql;
+    
+    mysqlupdate user set host = ‘%’ where user = ‘root’;
+    
+    mysqlselect host, user from user;
+    
+    mysqlflush privileges;
+
+
+----------
+
+**版本的切换**
+
+
+**1**.当电脑里安装了多个版本的MySQL时,如果想用其中一个版本.首先要关闭当前版本MySQL的的服务,然后打开所需要使用的另一个版本的MySQL服务.进入到MySQl的Client Command命令框,输入对应的用户名和密码,创建相应的数据库.特别需要注意的是,在启动bundle使用的过程中,可能会遇到连接不上的问题.此时需要将portal-ext.properties的database属性设置改成：
+
+From:
+
+   
+
+    jdbc.default.url=jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+   
+to
+
+   
+    jdbc.default.url=jdbc:mysql://localhost:[port]/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false`
+
+
+
+
+
+**2**.当远程的电脑访问本机的MySQL时,遇到连接不上的问题.有两种解决办法.
+
+a: 将所需要版本的MySQL安装到远程机器上.(麻烦,比较繁琐,不推荐)
+
+b: 给本机的MySQL授予远程访问的权限：
+
+      mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'WITH GRANT OPTION;
+      mysql>FLUSH PRIVILEGES;
+
+**3**.安装MySQL时,推荐使用解压缩的配置方法.此时需要一个对应版本的MySQL的zip包.具体的安装方法如下：
+
+a. 将MySQl的zip包解压缩到对应的目录下。
+
+b. 设置环境变量,在path环境变量中加上mysql bin文件夹的路
+c. 修改下my-defaule.ini配置文件,重命名为my.ini.在其中修改或添加配置：
+  
+      basedir=mysql所在目录 
+      datadir=mysql所在目录\data
+      port=port number
+
+d. 以管理员身份运行cmd,进入到MySQl的bin文件下,执行mysqld -install [service name]不写服务名的话,默认就是MySQL. (多个版本的话要保证不同版本使用的service name不同)
+                                                            -remove 删除
+      安装成功后,继续输入net start [service name] 启动服务
+   e: 服务启动成功后,就可以登录了.
+      输入mysql -u root -p(第一次登录没有密码,直接按回车过),登录成功！
+
+
+**解压缩的安装方式有以下优点**:
+
+1. : 安装方便,快捷.
+1. : 当多个版本安装在同一个机器里时,不会起冲突(注意端口号不能相同).
+1. : 不同版本间切换使用时,只需修改下环境变量,启动对应版本数据库的服务即可.
