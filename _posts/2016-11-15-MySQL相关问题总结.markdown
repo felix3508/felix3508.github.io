@@ -30,17 +30,17 @@ categories: jekyll update
 
 刚安装完成时root账号默认密码为空，此时可以将密码修改为指定的密码. 如：123456
 
-    c:>mysql –u root
-    
-    mysql>show databases; 
-    
-    mysql>use mysql;
-    
-    mysql>UPDATE user SET password=PASSWORD("liferay") WHERE user='root';
-    
-    mysql>FLUSH PRIVILEGES;
-    
-    mysql>QUIT;
+> c:>mysql –u root
+> 
+> mysql>show databases; 
+> 
+> mysql>use mysql;
+> 
+> mysql>UPDATE user SET password=PASSWORD("liferay") WHERE user='root';
+> 
+> mysql>FLUSH PRIVILEGES;
+> 
+> mysql>QUIT;
 
 **修改MySQL的字符集**
 
@@ -50,15 +50,15 @@ categories: jekyll update
 1. 进入mysql命令行，使用 mysql> SHOW VARIABLES LIKE 'character%';查看数据库编码
 2. 使用mysql命令修改对应的字符集编码如：
    
-    mysqlset character_set_client=utf8;
-    
-    mysqlset character_set_connection=utf8;
-    
-    mysqlset character_set_database=utf8;
-    
-    mysqlset character_set_results=utf8;
-    
-    mysqlset character_set_server=utf8;
+> mysqlset character_set_client=utf8;
+> 
+> mysqlset character_set_connection=utf8;
+> 
+> mysqlset character_set_database=utf8;
+> 
+> mysqlset character_set_results=utf8;
+> 
+> mysqlset character_set_server=utf8;
 
 
 **关于如何设置远程连接**：
@@ -67,16 +67,14 @@ categories: jekyll update
 
 改表法：
 
-    mysqluse mysql;
+> mysqluse mysql;
+> 
+> mysqlupdate user set host = ‘%’ where user = ‘root’;
+> 
+> mysqlselect host, user from user;
+> 
+> mysqlflush privileges;
     
-    mysqlupdate user set host = ‘%’ where user = ‘root’;
-    
-    mysqlselect host, user from user;
-    
-    mysqlflush privileges;
-    
-
-
 
 **版本的切换**
 
@@ -86,12 +84,13 @@ categories: jekyll update
 From:
 
 
-    jdbc.default.url=jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+   
+> jdbc.default.url=jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
    
 to
 
-
-    jdbc.default.url=jdbc:mysql://localhost:[port]/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+   
+> jdbc.default.url=jdbc:mysql://localhost:[port]/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
     
 
 **2**.当远程的电脑访问本机的MySQL时,遇到连接不上的问题.有两种解决办法.
@@ -100,8 +99,8 @@ a: 将所需要版本的MySQL安装到远程机器上.(麻烦,比较繁琐,不�
 
 b: 给本机的MySQL授予远程访问的权限：
 
-     mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'WITH GRANT OPTION;
-     mysql>FLUSH PRIVILEGES;
+ > mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'WITH GRANT OPTION;
+>  mysql>FLUSH PRIVILEGES;
 
 **3**.安装MySQL时,推荐使用解压缩的配置方法.此时需要一个对应版本的MySQL的zip包.具体的安装方法如下：
 
@@ -110,18 +109,17 @@ a. 将MySQl的zip包解压缩到对应的目录下。
 b. 设置环境变量,在path环境变量中加上mysql bin文件夹的路
 c. 修改下my-defaule.ini配置文件,重命名为my.ini.在其中修改或添加配置：
   
-      basedir=mysql所在目录
-    
-      datadir=mysql所在目录\data
-    
-      port=port number
+>   basedir=mysql所在目录
+> 
+>   datadir=mysql所在目录\data
+> 
+>   port=port number
 
-d. 以管理员身份运行cmd,进入到MySQl的bin文件下,执行mysqld -install [service name]不写服务名的话,默认就是MySQL. (多个版本的话要保证不同版本使用的service name不同)
-                                                            -remove 删除
-      安装成功后,继续输入net start [service name] 启动服务
+
+d. 以管理员身份运行cmd,进入到MySQl的bin文件下,执行mysqld -install [service name]不写服务名的话,默认就是MySQL. (多个版本的话要保证不同版本使用的service name不同).安装成功后,继续输入net start [service name] 启动服务
 
 e: 服务启动成功后,就可以登录了.
-      输入mysql -u root -p(第一次登录没有密码,直接按回车过),登录成功！
+   输入mysql -u root -p(第一次登录没有密码,直接按回车过),登录成功！
 
 
 **解压缩的安装方式有以下优点**:
