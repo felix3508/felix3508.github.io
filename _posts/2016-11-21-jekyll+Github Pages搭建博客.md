@@ -232,7 +232,7 @@ Github Pages生成网站的两种方式的基本原理
 
 一个Github账号对应一个用户或者一个组织,Github会给这个用户分配一个域名:username.github.io 在Github上有一个账号名为 username (任意),一个项目名为 username.github.io (固定格式,username与账号名一致,如果username与账号名不一致,就相当于以project的方式创建的site,最后生成的site link就不会是http://username.github.io 了,我之前一直在纠结为什么我创建的site link这么长,后来才发现这是根本原因所在.),项目分支名为 master (默认固定)个分支有类似下面的目录结构：
 
-author
+![]({{ site.url }}/assets/download/structure.PNG)
 
 这样，当你访问 http://username.github.io/ 时,Github会使用Jekyll解析用户username 名下的 username.github.io 项目中,分支为 master 的源代码，为你构建一个静态网站，并将生成的 index.html 展示给你。
 
@@ -250,7 +250,7 @@ Github还为每个项目提供了域名,例如你的项目名为 blog ,Github会
 
 接下来我们用第二种方式搭建博客
 
-> 创建个人仓库
+创建个人仓库
 
 因为我们使用第二种方式创建，所以仓库的名称可以随意取.在这以Test01为名字。
 
@@ -262,27 +262,27 @@ author
 
 点击Settings设置：
 
-author
+![]({{ site.url }}/assets/download/createRespository01.PNG)
 
 翻到下面，选择Launch automatic page generator：
 
-author
+![]({{ site.url }}/assets/download/createRespository02.PNG)
 
 再接着编译一下内容，选择页面上的元素，再点Continue to layouts：
 
-author
+![]({{ site.url }}/assets/download/createRespository03.PNG)
 
 选好模板，点击Publish page，就生成了Github Pages：
 
-author
+![]({{ site.url }}/assets/download/createRespository04.PNG)
 
 并且，分支自动设置为了gh-pages：
 
-author
+![]({{ site.url }}/assets/download/createRespository05.PNG)
 
 让我们打开这个网站看看效果吧！在浏览器输入： http://zyc8904.github.io/Test01 (zyc8904换成你的github名称，Test01换成项目名)：
 
-author
+![]({{ site.url }}/assets/download/createRespository06.PNG)
 
 
 ## 将本地Jekyll代码部署到Gihub仓库 ##
@@ -295,15 +295,15 @@ author
 
 首先打开我们的Github for windows客户端，点击左侧的 + 号按钮：
 
-author
+![]({{ site.url }}/assets/download/clone01.PNG)
 
 选择Clone，并且找到刚才新建的Test01仓库，然后点击最下方的Clone按钮：
 
-author
+![]({{ site.url }}/assets/download/clone02.PNG)
 
 然后选择存放位置，这里我放到D盘，然后点击确定：
 
-author
+![]({{ site.url }}/assets/download/clone03.PNG)
 
 这样我们的Test01就被克隆到了本地。打开D盘可以看见这个文件夹。这时我们启动Jekyll服务，别忘了进入Test01目录下：
 
@@ -322,24 +322,25 @@ jekyll serve --watch
 jekyll serve --watch
 这时你可能会发现cmd命令行中，自动处理了一些操作并且显示：
 
-author
+![]({{ site.url }}/assets/download/cmd.PNG)
 
 这就是我加–watch 的原因，不用再自己去生成，Jekyll服务器检测到你有变化会自动再生成页面，这时你在刷新浏览器，那么就会看到Github页面就会被Jekyll生成的页面代替了：
 
-author
+![]({{ site.url }}/assets/download/watched.PNG)
 
 > 部署本地Jekyll站点到Github Pages上
 
 打开Github for windows客户端，会看到 changes 上面有个点，说明他已经检测到我们的仓库的变化，并且自动把变化都列举在了下面：
 
-author
+![]({{ site.url }}/assets/download/upload01.PNG)
 
 这时我们在下方填入这次改变的名称和描述，点击Commit to gh-pages。然后再点击右上角的Sync把这次改变push到Github远程仓库里：
 
-author
+![]({{ site.url }}/assets/download/upload02.PNG)
 
 稍等几分钟，我们再次访问 http://zyc8904.github.io/Test01 就可以看见我们用Jekyll做的站点已经被部署到github上了：
 
-author
+
+![]({{ site.url }}/assets/download/upload03.PNG)
 
 以后你只要在本地Test01文件夹下的_posts文件夹里写文章，然后推送到远程仓库就可以了。
