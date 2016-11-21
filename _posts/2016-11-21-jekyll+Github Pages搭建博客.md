@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 title:  "Jekyll+Github Pages搭建博客"
 date:   2016-11-21 12:13:30
 tags: jekyll githubpages
