@@ -1,3 +1,12 @@
+
+---
+layout: post
+title:  "jekyll+Github Pages搭建博客"
+Content: “this is a test.”
+date:   2016-11-21 12:13:30
+categories: jekyll githubpages
+---
+
 初衷：
 
 想通过博客记录自己工作中遇到的问题,省去本地查看文档的麻烦,这样可以随时上网查阅,同时分享给需要的人.
