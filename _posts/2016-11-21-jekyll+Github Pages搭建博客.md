@@ -1,8 +1,6 @@
-
 ---
 layout: post
 title:  "Jekyll+Github Pages搭建博客"
-Content: “this is a test.”
 date:   2016-11-21 12:13:30
 tags: jekyll githubpages
 ---
