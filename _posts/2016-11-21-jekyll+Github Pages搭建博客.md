@@ -52,20 +52,20 @@ jekyll是默认支持Linux平台的,所以在Linux平台上安装jekyll将是异
 {% highlight ruby %}
 
 choco install ruby -version 2.2.4
+//安装Ruby 2.2.4,至于为什么非得是这个版本,说多了都是眼泪.刚开始安装的时候我也是未指定版本号,结果发现后操作啥都对不上.比如:生成的jekyll blog的目录跟别人的不一样,再就是生成的jekyll blog目录里会自带有一个Gemfile的文件（看文档时是说需要自己手动创建,当时我就纳闷为啥跟我的不一样的）,还有就是执行bundle install的时候报错.提示什么什么被激活了,其实是需要另一个版本的什么什么.这都是后话,下面会提到.
 
-{% endhighlight %}
-
-安装成功示例：
-
-{% highlight ruby %}
+官方链接请看:
+[https://jwillmer.de/blog/tutorial/how-to-install-jekyll-and-pages-gem-on-windows-10-x46#github-pages-and-plugins](https://jwillmer.de/blog/tutorial/how-to-install-jekyll-and-pages-gem-on-windows-10-x46#github-pages-and-plugins)
 
 $ ruby -v
-ruby 2.2.4p230 (2015-12-16 revision 53155) [i386-mingw32]
+//查看安装的版本 ruby 2.2.4p230 (2015-12-16 revision 53155) [i386-mingw32]
 
 {% endhighlight %}
 
 {% highlight ruby %}
-choco install ruby2.devkit - 编译json gem时需要使用
+
+choco install ruby2.devkit 
+//编译json gem时需要使用
 
 {% endhighlight %}
 
@@ -103,12 +103,14 @@ jekyll就是通过gem安装的.
 
 {% highlight ruby %}
 
-// 从Gem源安装gem包
 $ gem install [gemname]
-/ 删除指定的gem包，注意此命令将删除所有已安装的版本
+// 从Gem源安装gem包,后来发现一键式安装jekyll时安装的所有的gem包,都可以用这个命令来分别安装.如果之后你需要哪个gem包了,比如: rouge 代码高亮的等
+
 $ gem uninstall [gemname]
-// 查看本机已安装的所有gem包
+// 删除指定的gem包,注意此命令将删除所有已安装的版本.如果你安装的gem有多个版本,你想删除其中的一个.则可以在命令后加上 -v [version.number]. 删之前最好使用下面将要介绍的 gem list 命令来查看所有已安装的gem包.
+
 $ gem list [--local]
+// 查看本机已安装的所有gem包,如果想查看某一个特定的gem包,则需要在命令后加上 [gemname]
 
 {% endhighlight %}
 
@@ -121,7 +123,8 @@ $ gem list [--local]
 
 {% highlight ruby %}
 
-gem install jekyll
+gem install jekyll bundler
+//此处为指定版本号,如果后来发现装了多个版本的jekyll.可以使用gem uninstall jekyll -v [version.number] 来卸载它. 一般安装jekyll的时候都会将bundler一起安装上.如果不安装bundler的话,可能执行bundle install(构建包含所需要gem包的blog site)时,会报错,提示需要bundler.所以此处最好一起安装.当然也可以之后gem install命令来当初安装.
 
 {% endhighlight %}
 
@@ -154,16 +157,16 @@ $ gem list jekyll
 
 {% endhighlight %}
 
-## 使用Jekyll创建博客站点 ##
-//此时的博客未集成到Github Pages,只是一个纯粹的jekyll 博客.
+## Jekyll创建博客站点 ##
+此时的博客未集成到Github Pages,只是一个纯粹的jekyll 博客.
 
 {% highlight ruby %}
 
 jekyll new myblog
-//创建一个新的站点
+//创建一个新的站点,如果安装的Ruby版本正确,jekyll的版本也对,你会发现你创建的blog目录里会有下面文档里提到的_includes,_layouts,_plugins,_posts.等目录结构.无Gemfile文件.注意此时的blog,未安装GitHub Pages相关的gem.需要在这个目录里手动创建一个Gemfile文件,里面设置好相关的属性.执行bundle install命令才能够将Github Pages相关的gem包打包到这个blog site里.
 
 cd myblog
-//一定要进入创建的对应blog目录，否则服务无法开启
+//一定要进入创建的对应blog目录,否则服务无法开启
 
 jekyll serve
 //启动一个地址为http://localhost:4000/的服务器
@@ -226,8 +229,7 @@ gem uninstall jekyll -v 3.3.1卸载jekyll 3.3.1,保留2.4.0的版本,使其版�
 
 这样就完成了本地在jekyll site上安装了github-gem,此时你可以通过 jekyll serve 命令来在本地启动你的博客.
 
-
-## 用Github Pages生成个人博客 ##
+## 如何用Github Pages生成个人博客 ##
 
 Github Pages生成网站的两种方式的基本原理
 
@@ -247,9 +249,9 @@ Github还为每个项目提供了域名,例如你的项目名为 blog ,Github会
 
 所以要搭建自己的博客你有两种选择：
 
-建立名为 username.github.io 的项目,在 master 分支下存放网站源代码
+1. 建立名为 username.github.io 的项目,在 master 分支下存放网站源代码
 
-建立名为 blog 的项目,在 gh-pages 分支下存放网站源代码
+2. 建立名为 blog 的项目,在 gh-pages 分支下存放网站源代码
 
 接下来我们用第二种方式搭建博客
 
@@ -258,34 +260,32 @@ Github还为每个项目提供了域名,例如你的项目名为 blog ,Github会
 因为我们使用第二种方式创建，所以仓库的名称可以随意取.在这以Test01为名字。
 
 在Repossitory name处填入Test01，选择Public类型，然后点击下面的Create respository按钮：
-
-author
-
-> 为仓库创建Github Pages
-
-点击Settings设置：
-
+ 
 ![]({{ site.url }}/assets/download/createRespository01.PNG)
 
-翻到下面，选择Launch automatic page generator：
+为仓库创建Github Pages,点击Settings设置：
 
 ![]({{ site.url }}/assets/download/createRespository02.PNG)
 
-再接着编译一下内容，选择页面上的元素，再点Continue to layouts：
+翻到下面，选择Launch automatic page generator：
 
 ![]({{ site.url }}/assets/download/createRespository03.PNG)
 
-选好模板，点击Publish page，就生成了Github Pages：
+再接着编译一下内容，选择页面上的元素，再点Continue to layouts：
 
 ![]({{ site.url }}/assets/download/createRespository04.PNG)
 
-并且，分支自动设置为了gh-pages：
+选好模板，点击Publish page，就生成了Github Pages：
 
 ![]({{ site.url }}/assets/download/createRespository05.PNG)
 
-让我们打开这个网站看看效果吧！在浏览器输入： http://zyc8904.github.io/Test01 (zyc8904换成你的github名称，Test01换成项目名)：
+并且，分支自动设置为了gh-pages：
 
 ![]({{ site.url }}/assets/download/createRespository06.PNG)
+
+让我们打开这个网站看看效果吧！在浏览器输入： http://zyc8904.github.io/Test01 (zyc8904换成你的github名称，Test01换成项目名)：
+
+![]({{ site.url }}/assets/download/newPages.PNG)
 
 
 ## 将本地Jekyll代码部署到Gihub仓库 ##
@@ -310,11 +310,16 @@ author
 
 这样我们的Test01就被克隆到了本地。打开D盘可以看见这个文件夹。这时我们启动Jekyll服务，别忘了进入Test01目录下：
 
+{% highlight ruby %}
+
 cd d:\Test01
 jekyll serve --watch
+
+{% endhighlight %}
+
 现在我们打开[http://localhost:4000]，就可以看见我们在Github上创建的Pages页面了。
 
-> 拷贝本地Jekyll目录到版本库中
+拷贝本地Jekyll目录到版本库中
 
 删除Test01下的示例文件和文件夹：_site 、stylesheets 、index.html 、params.json。
 
